@@ -79,6 +79,13 @@ string function02(string line){
 	return ans;
 }
 
+void function03(string &line){
+	for(int e = 0 ; e < (int)line.size(); e++){
+		if( (line[e] >= 65 && line[e] <= 90 ) || (line[e] >=97 && line[e] <=122) ){
+			line[e] = toupper(line[e]);
+		}
+	}
+}
 
 void preProcesamiento01(){
 	fileIn.open("message.txt", ios::in);
@@ -102,6 +109,18 @@ void preProcesamiento02(){
 	fileOut.close();
 }
 
+void preProcesamiento03(){
+	fileIn.open("salida02.txt", ios::in);
+	fileOut.open("salida03.txt", ios::out);
+	string line; 
+	while(getline(fileIn,line)){
+		function03(line);
+		fileOut << line << endl;
+	}
+	fileIn.close();
+	fileOut.close();
+}
+
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
@@ -115,6 +134,13 @@ int main(){
 		2.- Eliminar tildes
 	*/
 	preProcesamiento02();
+
+	/*
+		3.- Convierta todas las letras a Mayusculas
+	*/
+	preProcesamiento03();
+
+	
 	
 	return 0;
 }
