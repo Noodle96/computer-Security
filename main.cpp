@@ -98,6 +98,27 @@ void preProcesamiento01(){
 	fileOut.close();
 }
 
+string function04(string line){
+	string ans;
+	for(int e =0  ;e < (int)line.size() ; e++){
+		if(line[e] == ' '){;}
+		else{
+			if(line[e]-'`' == -158){
+				e++;
+				if(line[e]-'`' == -191){;}
+			}
+			//para detectar el caracter  '¡'
+			else if(line[e] == ',' || line[e] == '.'  ||
+			 line[e] == '!' || line[e] == ';' || line[e] == '?' ||
+			 line[e] == ','){;}
+			else{
+				ans += line[e];
+			}
+		}
+	}
+	return ans;
+}
+
 void preProcesamiento02(){
 	fileIn.open("salida01.txt", ios::in);
 	fileOut.open("salida02.txt", ios::out);
@@ -121,6 +142,18 @@ void preProcesamiento03(){
 	fileOut.close();
 }
 
+void preProcesamiento04(){
+	fileIn.open("salida03.txt", ios::in);
+	fileOut.open("HERALDOSNEGROS_pre.txt", ios::out);
+	string line; 
+	while(getline(fileIn,line)){
+		fileOut << function04(line) << endl;
+	}
+	fileIn.close();
+	fileOut.close();
+}
+
+
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
@@ -140,7 +173,10 @@ int main(){
 	*/
 	preProcesamiento03();
 
-	
-	
+	/*
+		4.- Elimine los espacios en blanco y los signos de puntuacion
+	*/
+	preProcesamiento04();
+
 	return 0;
 }
