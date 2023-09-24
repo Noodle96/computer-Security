@@ -2,6 +2,10 @@
 using namespace std;
 fstream fileIn, fileOut;
 
+bool cmp(pair<long long, char> &pairA, pair<long long, char> &pairB){
+	return pairA.first >= pairB.first;
+}
+
 string function01(string line){
 	string ans;
 	for(int e = 0 ; e < (int)line.size(); e++){
@@ -87,17 +91,6 @@ void function03(string &line){
 	}
 }
 
-void preProcesamiento01(){
-	fileIn.open("message.txt", ios::in);
-	fileOut.open("salida01.txt", ios::out);
-	string line; 
-	while(getline(fileIn,line)){
-		fileOut << function01(line) << endl;
-	}
-	fileIn.close();
-	fileOut.close();
-}
-
 string function04(string line){
 	string ans;
 	for(int e =0  ;e < (int)line.size() ; e++){
@@ -117,6 +110,17 @@ string function04(string line){
 		}
 	}
 	return ans;
+}
+
+void preProcesamiento01(){
+	fileIn.open("message.txt", ios::in);
+	fileOut.open("salida01.txt", ios::out);
+	string line; 
+	while(getline(fileIn,line)){
+		fileOut << function01(line) << endl;
+	}
+	fileIn.close();
+	fileOut.close();
 }
 
 void preProcesamiento02(){
@@ -153,6 +157,27 @@ void preProcesamiento04(){
 	fileOut.close();
 }
 
+void preProcesamiento05(){
+	fileIn.open("HERALDOSNEGROS_pre.txt", ios::in);
+	string line;
+	map<char, long long> frecuencias;
+	while(getline(fileIn,line)){
+		for(int e = 0 ;e < (int)line.size() ; e++){
+			frecuencias[line[e]]++;
+		}
+	}
+	fileIn.close();
+	//print frecuencias
+	vector<pair<long long,char>> view_frecuencias;
+	for(auto it = frecuencias.begin(); it != frecuencias.end() ; it++){
+		view_frecuencias.push_back(make_pair(it->second, it->first));
+		//cout << it->first << " : " << it->second << endl;
+	}
+	sort(view_frecuencias.begin(), view_frecuencias.end(), cmp);
+	for(int e = 0 ; e < 5; e++){
+		cout << view_frecuencias[e].first << " " << view_frecuencias[e].second << endl;
+	}
+}
 
 int main(){
 	ios_base::sync_with_stdio(false);
@@ -178,5 +203,9 @@ int main(){
 	*/
 	preProcesamiento04();
 
+	/*
+		5.- Calcule una tabla de frecuencias del archivo HERALDOSNEGROS_pre.txt
+	*/
+	preProcesamiento05();
 	return 0;
 }
