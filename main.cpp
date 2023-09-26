@@ -202,6 +202,34 @@ void preProcesamiento07(){
 	fileOut.close();
 }
 
+void preProcesamiento08(){
+	fileIn.open("HERALDOSNEGROS_unicode8.txt", ios::in);
+	fileOut.open("HERALDOSNEGROS_unicode8_final.txt", ios::out);
+	string line;
+	string lineFinal;
+	while(getline(fileIn,line)){
+		if(!line.empty()){
+			lineFinal += line;
+		}
+	}
+
+	fileIn.close();
+	string ans;
+	for(int e =0  ;e < lineFinal.size() ; e++){
+		ans += lineFinal[e];
+		if((e+1)%20 == 0)ans += "AQUI";
+	}
+	int resto = ans.size()%4;
+	if(resto !=0){
+		int restantes = 4-resto;
+		for(int e = 0 ;e < restantes ; e++){
+			ans += "X";
+		}
+	}
+	fileOut << ans << endl;
+	fileOut.close();
+}
+
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
@@ -232,9 +260,15 @@ int main(){
 	preProcesamiento05();
 
 	/*
-		6.- procesar  HERALDOSNEGROS_pre.txt cambiando cada caracter a unicode-8
+		7.- procesar  HERALDOSNEGROS_pre.txt cambiando cada caracter a unicode-8
 	*/
 	preProcesamiento07();
+
+	/*
+		8.- Insertar la palabra Aqui cada 20 caracteres 
+			y que el numero de palabras sea multiplo de 4
+	*/
+	preProcesamiento08();
 
 	return 0;
 }
