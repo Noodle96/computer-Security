@@ -112,6 +112,16 @@ string function04(string line){
 	return ans;
 }
 
+string function07(string line){
+	std::stringstream ss;
+	for(int e = 0 ; e < (int)line.size(); e++){
+		if(line[e] != ' '){
+			ss << std::hex << line[e]-0;
+		}
+	}
+	return ss.str();
+}
+
 void preProcesamiento01(){
 	fileIn.open("message.txt", ios::in);
 	fileOut.open("salida01.txt", ios::out);
@@ -179,6 +189,19 @@ void preProcesamiento05(){
 	}
 }
 
+void preProcesamiento07(){
+	fileIn.open("HERALDOSNEGROS_pre.txt", ios::in);
+	//fileIn.open("test.txt", ios::in);
+	fileOut.open("HERALDOSNEGROS_unicode8.txt", ios::out);
+	string line;
+	fileOut << "0x";
+	while(getline(fileIn,line)){
+		fileOut << function07(line) << endl;
+	}
+	fileIn.close();
+	fileOut.close();
+}
+
 int main(){
 	ios_base::sync_with_stdio(false);
 	cin.tie(0);
@@ -207,5 +230,11 @@ int main(){
 		5.- Calcule una tabla de frecuencias del archivo HERALDOSNEGROS_pre.txt
 	*/
 	preProcesamiento05();
+
+	/*
+		6.- procesar  HERALDOSNEGROS_pre.txt cambiando cada caracter a unicode-8
+	*/
+	preProcesamiento07();
+
 	return 0;
 }
