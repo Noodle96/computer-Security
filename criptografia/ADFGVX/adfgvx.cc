@@ -6,9 +6,9 @@ using namespace std;
 
 const string matrixContent = "fd60z2wg14snylhpce5moi3ut79xkvj8abrq";
 
-bool cmp(pair<string, vector<char>> &a, pair<string, vector<char>> &b){
-	int aPosition = a.first[1];
-	int bPosition = b.first[1];
+bool cmp(pair<pair<char,int>, vector<char>> &a, pair<pair<char,int>, vector<char>> &b){
+	int aPosition = a.first.second;
+	int bPosition = b.first.second;
 	return aPosition < bPosition;
 }
 
@@ -86,26 +86,33 @@ class ADFGVX{
 		}
 		string decrypt(string msgEncriptado, string clave){
 			cout << "decrypt:" << endl;
-			vector<pair<string, vector<char>>> claveColumna;
+			vector<pair< pair<char,int>, vector<char>>> claveColumna;
 			//math claveColumna struct with clave indices
 			for(int e = 0 ; e < clave.size(); e++){
-				string key = string(1, clave[e]);
-				key += to_string(e);
-				claveColumna.pb({key,vector<char>()});
+				char key = clave[e];
+				//string key = string(1, clave[e]);
+				//key += to_string(e);
+				//claveColumna.pb({key,vector<char>()});
+				claveColumna.pb({{key,e},vector<char>()});
 			}
 			for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-				cout << it->first << "->";
+				//cout << it->first << "->";
+				auto key = it->first;
+				cout << key.first << "-" << key.second << " ";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
 			}cout << endl;
 			sort(all(claveColumna));
 			for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-				cout << it->first << "->";
+				//cout << it->first << "->";
+				auto key = it->first;
+				cout << key.first << "-" << key.second << " ";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
 			}cout << endl;
+			
 			//RECORRER EL MENSAJE ENCRIPTADO
 			int factor = msgEncriptado.size() / claveColumna.size();
 			cout << "alerta" <<endl;
@@ -123,16 +130,19 @@ class ADFGVX{
 			
 			//CLAVE COLUMNA FILLED
 			for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-				cout << it->first << "->";
+				//cout << it->first << "->";
+				auto key = it->first;
+				cout << key.first << "-" << key.second << " ";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
 			}cout << endl;
 			//ORDENAR EN BASE A LOS INDICES
 			sort(all(claveColumna), cmp);
-			cout << "after sort" << endl;
 			for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-				cout << it->first << "->";
+				//cout << it->first << "->";
+				auto key = it->first;
+				cout << key.first << "-" << key.second << " ";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
@@ -289,7 +299,7 @@ class ADFGVX{
 
 void solve(){
 	ADFGVX adfgvx = ADFGVX(matrixContent);
-	string mensaje = "arbol3", clave = "mecanica";
+	string mensaje = "NOYELLOWTEAMARBOLESmonosELIAS", clave = "sasasasasa";
 	string msg_encriptado = adfgvx.encrypt(mensaje,clave);
 	// adfgvx.printMatriz();
 	cout << "mensaje encriptado: " << msg_encriptado << endl;
