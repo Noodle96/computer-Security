@@ -1,11 +1,15 @@
+#include <QtWidgets>
 #include "mainwindow.h"
-#include "./ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    //, ui(new Ui::MainWindow)
 {
-    ui->setupUi(this);
+    //! [0]
+    //ui->setupUi(this);
+    // Crear el widget central
+    QWidget *centralWidget = new QWidget(this);
+
     QMenu *fileMenu = new QMenu(tr("&File"),this);
     QAction *quitAction = fileMenu->addAction(tr("&Exit"));
     quitAction->setShortcut(QKeySequence::Quit);
@@ -19,28 +23,44 @@ MainWindow::MainWindow(QWidget *parent)
     menuBar()->addMenu(fileMenu);
     menuBar()->addMenu(helpMenu);
 
-    metodo_tipo = new QTabWidget;
-    setCentralWidget(metodo_tipo);
-    setWindowTitle(tr("Order Form"));
 
-    //QVBoxLayout *editor = new QVBoxLayout;
-    //int tabIndex = metodo_tipo->addTab(editor, "alea");
-    //metodo_tipo->setCurrentIndex(tabIndex);
+    //! [0]
 
-    QWidget *tab1 = new QWidget;
-    QLabel *label1 = new QLabel("Contenido de la Pestaña 1");
-                     tab1->setLayout(new QVBoxLayout);
-    tab1->layout()->addWidget(label1);
-    metodo_tipo->addTab(tab1, "Pestaña 1");
+    //! [1]
+    tabWidget = new QTabWidget;
+    tabWidget->addTab(new ADFGVXEncryptionTab(), tr("ADFGVX Encryption"));
+    tabWidget->addTab(new ADFGVXDecryptionTab(), tr("ADFGVX Decryption") );
+    //! [1]
+
+    //![2]
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    mainLayout->addWidget(tabWidget);
+    setCentralWidget(centralWidget);
+
+    //setLayout(mainLayout);
+    //![2]
 }
 
-MainWindow::~MainWindow()
-{
-    delete ui;
-}
+//MainWindow::~MainWindow()
+//{
+    //delete ui;
+//}
 
 void MainWindow::showMessageAbout(){
     //std::cout << "desde show message" << std::endl;
     QMessageBox::about(this, "About us","Developed by NoYellowTeam");
     return;
 }
+
+ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
+    :QWidget(parent)
+{
+    ;
+}
+
+ADFGVXDecryptionTab::ADFGVXDecryptionTab(QWidget *parent)
+    :QWidget(parent)
+{
+    ;
+}
+
