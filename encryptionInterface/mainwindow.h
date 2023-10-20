@@ -30,6 +30,7 @@ private slots:
     void onLineClaveTextChanged(const QString &text) {
         QString contenidoLineClave = lineClave->text();
         claveFormateada = contenidoLineClave.toStdString();
+        adfgvx.preprocesado(claveFormateada);
         //MAIN FUNTION
         if(!claveFormateada.empty() && !textFormateado.empty() ){
             buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
@@ -39,9 +40,6 @@ private slots:
             buttonEncriptar->setStyleSheet("background-color: red; color: white;");
         }
         if (!text.isEmpty()) {
-            //uso adfgvx solo para procesar contenidoLineClave
-            adfgvx.preprocesado(claveFormateada);
-
             // Si el lineEdit tiene contenido, muestra el QLabel formateado
             labelFormateado->show();
             lineFormateado->show();
@@ -56,6 +54,7 @@ private slots:
     void onTextEditTextPlainTextChanged() {
         QString contenidoTextEditPlainText = textEditTextPlain->toPlainText();
         textFormateado = contenidoTextEditPlainText.toStdString();
+        adfgvx.preprocesado(textFormateado);
         //MAIN FUNTION
         if(!claveFormateada.empty() && !textFormateado.empty() ){
             buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
@@ -66,9 +65,6 @@ private slots:
             buttonEncriptar->setStyleSheet("background-color: red; color: white;");
         }
         if (!textEditTextPlain->toPlainText().isEmpty()) {
-            //uso adfgvx solo para procesar contenidoLineClave
-            adfgvx.preprocesado(textFormateado);
-
             // Si el lineEdit tiene contenido, muestra el QLabel formateado
             labelTextPlainLimpio->show();
             textEditTextPlainLimpio->show();
@@ -78,6 +74,11 @@ private slots:
             textEditTextPlainLimpio->hide();
             labelTextPlainLimpio->hide();
         }
+    }
+    void onButtonEncriptarPressed(){
+        //cout << "se presiono el boton" << endl;
+        string msgEncriptado = adfgvx.encrypt(textFormateado,claveFormateada);
+        textEditTextPlainEncriptado->setText(QString::fromStdString(msgEncriptado));
     }
 
 private:
@@ -94,6 +95,8 @@ private:
     QLabel *labelTextPlainLimpio;
     QTextEdit *textEditTextPlainLimpio;
     QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
+
+    QTextEdit *textEditTextPlainEncriptado;
 
 };
 //! [0]

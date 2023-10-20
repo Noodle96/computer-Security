@@ -5,6 +5,7 @@ string ADFGVX::encrypt(string msg, string clave){
     this->lenMensajeOriginal = msg.size();
     //FASE01: SUSTITUCION
     preprocesado(msg);
+    cout << "QT: msg: " << msg<<endl;
     string msg_sustituido = sustitucion(msg);
     cout << "msg_sustituido: "<<  msg_sustituido << endl;
     preprocesado(clave);
@@ -51,6 +52,7 @@ string ADFGVX::encrypt(string msg, string clave){
             msg_encrypt += *et;
         }
     }
+    cout << "mensaje encriptado: " << msg_encrypt << endl;
     return msg_encrypt;
 }
 

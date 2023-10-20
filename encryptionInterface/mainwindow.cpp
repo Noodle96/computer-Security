@@ -86,7 +86,7 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     textEditTextPlainLimpio = new QTextEdit(this);
 
     QLabel *labelMensajeEncriptado = new QLabel("TEXTO PLANO ENCRIPTADO", this);
-    QTextEdit *textEditTextPlainEncriptado = new QTextEdit(this);
+    textEditTextPlainEncriptado = new QTextEdit(this);
 
     //AGREGADO DE CARACTERISTICA
     // Crear el QLabel formateado y ocultarlo inicialmente
@@ -133,6 +133,8 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     // Conectar la señal de edición de lineClave a una ranura personalizada
     connect(lineClave, &QLineEdit::textChanged, this, &ADFGVXEncryptionTab::onLineClaveTextChanged);
     connect(textEditTextPlain, &QTextEdit::textChanged, this, &ADFGVXEncryptionTab::onTextEditTextPlainTextChanged);
+    connect(buttonEncriptar, &QPushButton::clicked, this, &ADFGVXEncryptionTab::onButtonEncriptarPressed);
+
 
     // Agregar los widgets al diseño
     layout->addWidget(labelClave);
