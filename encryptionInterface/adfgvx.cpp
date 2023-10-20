@@ -212,9 +212,17 @@ string ADFGVX::deleteSpacesAndPunctuation(string line){
                 if(line[e]-'`' == -191){;}
             }
             //para detectar el caracter  '¡'
-            else if(line[e] == ',' || line[e] == '.'  ||
+            else if(line[e] == ',' || line[e] == '.'  || line[e] == '%' ||
                      line[e] == '!' || line[e] == ';' || line[e] == '?' ||
-                     line[e] == ','){;}
+                     line[e] == ',' || line[e] == '#' || line[e] == '$' ||
+                     line[e] == '&' || line[e] == '/' || line[e] == '(' ||
+                     line[e] == ')' || line[e] == '=' || line[e] == '|' ||
+                     line[e] == '+' || line[e] == '*' || line[e] == '{' ||
+                     line[e] == '}' || line[e] == '[' || line[e] == ']' ||
+                     line[e] == '-' || line[e] == '_' || line[e] == ';' ||
+                     line[e] == '`' || line[e] == '^' || line[e] == '~' ||
+                     line[e] == '\''|| line[e] == '\\'|| line[e] == '\¿'||
+                     line[e] == '\"'){;}
             else{
                 ans += line[e];
             }
