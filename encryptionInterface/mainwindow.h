@@ -2,14 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-/*
+
 #include <iostream>
 #include<QMessageBox>
 #include<QTextEdit>
 #include <QVBoxLayout>
 #include<QLabel>
 #include <QMenu>
-*/
+
 QT_BEGIN_NAMESPACE
 //namespace Ui { class MainWindow; }
 class QTabWidget;
@@ -20,6 +20,10 @@ class ADFGVXEncryptionTab: public QWidget{
     Q_OBJECT
 public:
     explicit ADFGVXEncryptionTab(QWidget *parent = nullptr);
+private slots:
+    void handleEncrypt() {
+        std::cout << "hola de handle" <<std::endl;
+    }
 };
 //! [0]
 
