@@ -1,4 +1,5 @@
 #include "adfgvx.h"
+#include "utils.h"
 
 string ADFGVX::encrypt(string msg, string clave){
     this->lenMensajeOriginal = msg.size();
@@ -98,7 +99,7 @@ string ADFGVX::decrypt(string msgEncriptado, string clave){
         }cout << endl;
     }cout << endl;
     //ORDENAR EN BASE A LOS INDICES
-    sort(all(claveColumna), cmp);
+    sort(all(claveColumna), my_cmp);
     cout << "after sort" << endl;
     for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
         cout << it->first << "->";

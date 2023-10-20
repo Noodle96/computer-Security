@@ -1,6 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-
+#include "adfgvx.h"
 #include <QMainWindow>
 
 #include <iostream>
@@ -10,6 +10,7 @@
 #include<QLabel>
 #include <QMenu>
 #include <QLineEdit>
+#include <QPushButton>
 
 QT_BEGIN_NAMESPACE
 //namespace Ui { class MainWindow; }
@@ -25,22 +26,74 @@ private slots:
     void handleEncrypt() {
         std::cout << "hola de handle" <<std::endl;
     }
-    void onLineClaveTextChanged(const QString &text) {
-        if (!text.isEmpty()) {
-            // Si el lineEdit tiene contenido, muestra el QLabel formateado
-            lineFormateado->show();
-            labelFormateado->show();
 
+    void onLineClaveTextChanged(const QString &text) {
+        QString contenidoLineClave = lineClave->text();
+        claveFormateada = contenidoLineClave.toStdString();
+        //MAIN FUNTION
+        if(!claveFormateada.empty() && !textFormateado.empty() ){
+            buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
+            buttonEncriptar->setEnabled(true);
+        }else{
+            buttonEncriptar->setEnabled(false);
+            buttonEncriptar->setStyleSheet("background-color: red; color: white;");
+        }
+        if (!text.isEmpty()) {
+            //uso adfgvx solo para procesar contenidoLineClave
+            adfgvx.preprocesado(claveFormateada);
+
+            // Si el lineEdit tiene contenido, muestra el QLabel formateado
+            labelFormateado->show();
+            lineFormateado->show();
+            lineFormateado->setText(QString::fromStdString(claveFormateada));
         } else {
             // Si el lineEdit está vacío, oculta el QLabel formateado
             lineFormateado->hide();
             labelFormateado->hide();
         }
     }
+
+    void onTextEditTextPlainTextChanged() {
+        QString contenidoTextEditPlainText = textEditTextPlain->toPlainText();
+        textFormateado = contenidoTextEditPlainText.toStdString();
+        //MAIN FUNTION
+        if(!claveFormateada.empty() && !textFormateado.empty() ){
+            buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
+            buttonEncriptar->setEnabled(true);
+        }
+        else{
+            buttonEncriptar->setEnabled(false);
+            buttonEncriptar->setStyleSheet("background-color: red; color: white;");
+        }
+        if (!textEditTextPlain->toPlainText().isEmpty()) {
+            //uso adfgvx solo para procesar contenidoLineClave
+            adfgvx.preprocesado(textFormateado);
+
+            // Si el lineEdit tiene contenido, muestra el QLabel formateado
+            labelTextPlainLimpio->show();
+            textEditTextPlainLimpio->show();
+            textEditTextPlainLimpio->setText(QString::fromStdString(textFormateado));
+        } else {
+            // Si el lineEdit está vacío, oculta el QLabel formateado
+            textEditTextPlainLimpio->hide();
+            labelTextPlainLimpio->hide();
+        }
+    }
+
 private:
+    string claveFormateada;
+    string textFormateado;
+    ADFGVX adfgvx;
+
     QLineEdit *lineClave;
     QLabel *labelFormateado;
     QLineEdit *lineFormateado;
+
+    QTextEdit *textEditTextPlain;
+
+    QLabel *labelTextPlainLimpio;
+    QTextEdit *textEditTextPlainLimpio;
+    QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
 
 };
 //! [0]

@@ -7,19 +7,12 @@ using namespace std;
 #define pb push_back
 const string matrixContent = "fd60z2wg14snylhpce5moi3ut79xkvj8abrq";
 
-bool cmp(pair<string, vector<char>> &a, pair<string, vector<char>> &b){
-    int aPosition = a.first[1];
-    int bPosition = b.first[1];
-    return aPosition < bPosition;
-}
-
-
 class ADFGVX{
 private:
     char M[6][6];
     int lenMensajeOriginal;
 public:
-    ADFGVX(string contenidoM){
+    ADFGVX(string contenidoM=""){
         preprocesado(contenidoM);
         //cout << "contenidoM: " << contenidoM <<endl;
         int i = 0;

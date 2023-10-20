@@ -72,6 +72,7 @@ void MainWindow::showMessageAbout(){
 ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     :QWidget(parent)
 {
+    adfgvx = ADFGVX(matrixContent);
     // Crear widgets
     QLabel *labelClave = new QLabel("CLAVE:", this);
     lineClave = new QLineEdit(this);
@@ -79,24 +80,36 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     lineFormateado = new QLineEdit("",this);
 
     QLabel *labelTextPlain = new QLabel("TEXTO PLANO:", this);
-    QTextEdit *textEditTextPlain = new QTextEdit(this);
+    textEditTextPlain = new QTextEdit(this);
 
-    QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
+    labelTextPlainLimpio = new QLabel("TEXTO PLANO FORMATEADO");
+    textEditTextPlainLimpio = new QTextEdit(this);
 
     QLabel *labelMensajeEncriptado = new QLabel("TEXTO PLANO ENCRIPTADO", this);
     QTextEdit *textEditTextPlainEncriptado = new QTextEdit(this);
 
     //AGREGADO DE CARACTERISTICA
     // Crear el QLabel formateado y ocultarlo inicialmente
-    lineFormateado->hide();
     labelFormateado->hide();
-    lineFormateado->setEnabled(false);
+    lineFormateado->hide();
+    labelTextPlainLimpio->hide();
+    textEditTextPlainLimpio->hide();
 
-    buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;");
+    buttonEncriptar->setEnabled(false);
+    buttonEncriptar->setStyleSheet("background-color: red; color: white;");
+
+    lineFormateado->setEnabled(false);
+    textEditTextPlainLimpio->setEnabled(false); // to enable textEditTextPlainLimpio
+
+
+    //buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;");
     // Establecer el estilo de fuente del QLabel usando una hoja de estilo
     labelClave->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
     labelTextPlain->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
-    labelFormateado->setStyleSheet("color: rgba(0, 0, 0, 0.50); font-weight: bold; font-style: italic;");
+    labelFormateado->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    labelTextPlainLimpio->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    lineFormateado->setStyleSheet("color: rgba(0, 0, 0, 1);"); // Cambiar el color del texto
+    textEditTextPlainLimpio->setStyleSheet("color: rgba(0, 0, 0, 1);"); // Cambiar el color del texto
     labelMensajeEncriptado->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
 
     // Alineación del texto de los labels
@@ -104,12 +117,10 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     labelTextPlain->setAlignment(Qt::AlignLeft);
     labelFormateado->setAlignment(Qt::AlignLeft);
     labelMensajeEncriptado->setAlignment(Qt::AlignLeft);
+    labelTextPlainLimpio->setAlignment(Qt::AlignLeft);
 
     lineClave->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
-    lineFormateado->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
     textEditTextPlain->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
-
-
 
     // Configurar un diseño vertical para organizar los widgets
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -121,6 +132,7 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
 
     // Conectar la señal de edición de lineClave a una ranura personalizada
     connect(lineClave, &QLineEdit::textChanged, this, &ADFGVXEncryptionTab::onLineClaveTextChanged);
+    connect(textEditTextPlain, &QTextEdit::textChanged, this, &ADFGVXEncryptionTab::onTextEditTextPlainTextChanged);
 
     // Agregar los widgets al diseño
     layout->addWidget(labelClave);
@@ -130,6 +142,9 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
 
     layout->addWidget(labelTextPlain);
     layout->addWidget(textEditTextPlain);
+
+    layout->addWidget(labelTextPlainLimpio);
+    layout->addWidget(textEditTextPlainLimpio);
 
     layout->addWidget(labelMensajeEncriptado);
     layout->addWidget(textEditTextPlainEncriptado);
