@@ -9,6 +9,7 @@
 #include <QVBoxLayout>
 #include<QLabel>
 #include <QMenu>
+#include <QLineEdit>
 
 QT_BEGIN_NAMESPACE
 //namespace Ui { class MainWindow; }
@@ -17,13 +18,25 @@ QT_END_NAMESPACE
 
 //! [0]
 class ADFGVXEncryptionTab: public QWidget{
-    Q_OBJECT
+    Q_OBJECT // Agregar esta macro para usar señales y ranuras
 public:
     explicit ADFGVXEncryptionTab(QWidget *parent = nullptr);
 private slots:
     void handleEncrypt() {
         std::cout << "hola de handle" <<std::endl;
     }
+    void onLineEditTextChanged(const QString &text) {
+        if (!text.isEmpty()) {
+            // Si el lineEdit tiene contenido, muestra el QLabel formateado
+            labelFormateado->show();
+        } else {
+            // Si el lineEdit está vacío, oculta el QLabel formateado
+            labelFormateado->hide();
+        }
+    }
+private:
+    QLineEdit *lineClave;
+    QLabel *labelFormateado;
 };
 //! [0]
 

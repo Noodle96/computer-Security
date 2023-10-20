@@ -74,36 +74,44 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
     setLayout(layout);
     */
         // Crear widgets
-        QLabel *label1 = new QLabel("CLAVE:", this);
-        QLineEdit *lineEdit = new QLineEdit(this);
-        QLabel *label2 = new QLabel("TEXTO PLANO:", this);
-        QPushButton *button = new QPushButton("ENCRIPTAR", this);
-        QTextEdit *textEdit = new QTextEdit(this);
+        QLabel *labelClave = new QLabel("CLAVE:", this);
+        lineClave = new QLineEdit(this);
+        labelFormateado = new QLabel("Contenido formateado", this);
 
-        button->setStyleSheet("background-color: #4CAF50; color: white;");
+        QLabel *labelTextPlain = new QLabel("TEXTO PLANO:", this);
+        QTextEdit *textEditTextPlain = new QTextEdit(this);
+
+        QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
+
+        //AGREGADO DE CARACTERISTICA
+        // Crear el QLabel formateado y ocultarlo inicialmente
+        labelFormateado->hide();
+        buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;");
         // Establecer el estilo de fuente del QLabel usando una hoja de estilo
-        label1->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
-        label2->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+        labelClave->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+        labelTextPlain->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+        // Alineación del texto de los labels
+        labelClave->setAlignment(Qt::AlignLeft);
+        labelTextPlain->setAlignment(Qt::AlignLeft);
 
         // Configurar un diseño vertical para organizar los widgets
         QVBoxLayout *layout = new QVBoxLayout(this);
         // Configurar un diseño horizontal para el botón
         QHBoxLayout *buttonLayout = new QHBoxLayout;
         buttonLayout->addStretch(1); // Agregar un espacio flexible a la izquierda del botón
-        buttonLayout->addWidget(button);
+        buttonLayout->addWidget(buttonEncriptar);
 
+
+        // Conectar la señal de edición de lineEdit a una ranura personalizada
+        connect(lineClave, &QLineEdit::textChanged, this, &ADFGVXEncryptionTab::onLineEditTextChanged);
 
         // Agregar los widgets al diseño
-        layout->addWidget(label1);
-        layout->addWidget(lineEdit);
-        layout->addWidget(label2);
-        layout->addWidget(textEdit);
+        layout->addWidget(labelClave);
+        layout->addWidget(lineClave);
+        layout->addWidget(labelFormateado);
+        layout->addWidget(labelTextPlain);
+        layout->addWidget(textEditTextPlain);
         layout->addLayout(buttonLayout);
-        // Alineación del texto de los labels
-        label1->setAlignment(Qt::AlignLeft);
-        label2->setAlignment(Qt::AlignLeft);
-        // Ajustar el tamaño mínimo del textEdit
-        textEdit->setMinimumSize(200, 100);
 }
 
 ADFGVXDecryptionTab::ADFGVXDecryptionTab(QWidget *parent)
