@@ -58,26 +58,33 @@ string ADFGVX::encrypt(string msg, string clave){
 
 string ADFGVX::decrypt(string msgEncriptado, string clave){
     cout << "decrypt:" << endl;
-    vector<pair<string, vector<char>>> claveColumna;
+    vector<pair< pair<char,int>, vector<char>>> claveColumna;
     //math claveColumna struct with clave indices
     for(int e = 0 ; e < clave.size(); e++){
-        string key = string(1, clave[e]);
-        key += to_string(e);
-        claveColumna.pb({key,vector<char>()});
+        char key = clave[e];
+        //string key = string(1, clave[e]);
+        //key += to_string(e);
+        //claveColumna.pb({key,vector<char>()});
+        claveColumna.pb({{key,e},vector<char>()});
     }
     for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-        cout << it->first << "->";
+        //cout << it->first << "->";
+        auto key = it->first;
+        cout << key.first << "-" << key.second << " ";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
     }cout << endl;
     sort(all(claveColumna));
     for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-        cout << it->first << "->";
+        //cout << it->first << "->";
+        auto key = it->first;
+        cout << key.first << "-" << key.second << " ";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
     }cout << endl;
+
     //RECORRER EL MENSAJE ENCRIPTADO
     int factor = msgEncriptado.size() / claveColumna.size();
     cout << "alerta" <<endl;
@@ -95,16 +102,19 @@ string ADFGVX::decrypt(string msgEncriptado, string clave){
 
     //CLAVE COLUMNA FILLED
     for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-        cout << it->first << "->";
+        //cout << it->first << "->";
+        auto key = it->first;
+        cout << key.first << "-" << key.second << " ";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
     }cout << endl;
     //ORDENAR EN BASE A LOS INDICES
-    sort(all(claveColumna), my_cmp);
-    cout << "after sort" << endl;
+    sort(all(claveColumna), cmp);
     for(auto it = claveColumna.begin() ; it != claveColumna.end(); it++){
-        cout << it->first << "->";
+        //cout << it->first << "->";
+        auto key = it->first;
+        cout << key.first << "-" << key.second << " ";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
