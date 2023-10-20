@@ -51,11 +51,7 @@ void MainWindow::showMessageAbout(){
     QMessageBox::about(this, "About us","Developed by NoYellowTeam");
     return;
 }
-
-ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
-    :QWidget(parent)
-{
-    /*
+/*
     QLabel *label = new QLabel("ADFGVX Encryption Tab", this);
     label->setAlignment(Qt::AlignLeft | Qt::AlignTop); // Alinea el texto arriba a la izquierda
 
@@ -73,45 +69,72 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
 
     setLayout(layout);
     */
-        // Crear widgets
-        QLabel *labelClave = new QLabel("CLAVE:", this);
-        lineClave = new QLineEdit(this);
-        labelFormateado = new QLabel("Contenido formateado", this);
+ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
+    :QWidget(parent)
+{
+    // Crear widgets
+    QLabel *labelClave = new QLabel("CLAVE:", this);
+    lineClave = new QLineEdit(this);
+    labelFormateado = new QLabel("CLAVE FORMATEADA", this);
+    lineFormateado = new QLineEdit("",this);
 
-        QLabel *labelTextPlain = new QLabel("TEXTO PLANO:", this);
-        QTextEdit *textEditTextPlain = new QTextEdit(this);
+    QLabel *labelTextPlain = new QLabel("TEXTO PLANO:", this);
+    QTextEdit *textEditTextPlain = new QTextEdit(this);
 
-        QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
+    QPushButton *buttonEncriptar = new QPushButton("ENCRIPTAR", this);
 
-        //AGREGADO DE CARACTERISTICA
-        // Crear el QLabel formateado y ocultarlo inicialmente
-        labelFormateado->hide();
-        buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;");
-        // Establecer el estilo de fuente del QLabel usando una hoja de estilo
-        labelClave->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
-        labelTextPlain->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
-        // Alineación del texto de los labels
-        labelClave->setAlignment(Qt::AlignLeft);
-        labelTextPlain->setAlignment(Qt::AlignLeft);
+    QLabel *labelMensajeEncriptado = new QLabel("TEXTO PLANO ENCRIPTADO", this);
+    QTextEdit *textEditTextPlainEncriptado = new QTextEdit(this);
 
-        // Configurar un diseño vertical para organizar los widgets
-        QVBoxLayout *layout = new QVBoxLayout(this);
-        // Configurar un diseño horizontal para el botón
-        QHBoxLayout *buttonLayout = new QHBoxLayout;
-        buttonLayout->addStretch(1); // Agregar un espacio flexible a la izquierda del botón
-        buttonLayout->addWidget(buttonEncriptar);
+    //AGREGADO DE CARACTERISTICA
+    // Crear el QLabel formateado y ocultarlo inicialmente
+    lineFormateado->hide();
+    labelFormateado->hide();
+    lineFormateado->setEnabled(false);
+
+    buttonEncriptar->setStyleSheet("background-color: #4CAF50; color: white;");
+    // Establecer el estilo de fuente del QLabel usando una hoja de estilo
+    labelClave->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    labelTextPlain->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    labelFormateado->setStyleSheet("color: rgba(0, 0, 0, 0.50); font-weight: bold; font-style: italic;");
+    labelMensajeEncriptado->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+
+    // Alineación del texto de los labels
+    labelClave->setAlignment(Qt::AlignLeft);
+    labelTextPlain->setAlignment(Qt::AlignLeft);
+    labelFormateado->setAlignment(Qt::AlignLeft);
+    labelMensajeEncriptado->setAlignment(Qt::AlignLeft);
+
+    lineClave->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
+    lineFormateado->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
+    textEditTextPlain->setStyleSheet("margin-bottom: 10px;"); // Agregar un margen a la derecha de lineClave
 
 
-        // Conectar la señal de edición de lineEdit a una ranura personalizada
-        connect(lineClave, &QLineEdit::textChanged, this, &ADFGVXEncryptionTab::onLineEditTextChanged);
 
-        // Agregar los widgets al diseño
-        layout->addWidget(labelClave);
-        layout->addWidget(lineClave);
-        layout->addWidget(labelFormateado);
-        layout->addWidget(labelTextPlain);
-        layout->addWidget(textEditTextPlain);
-        layout->addLayout(buttonLayout);
+    // Configurar un diseño vertical para organizar los widgets
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    // Configurar un diseño horizontal para el botón
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    buttonLayout->addStretch(1); // Agregar un espacio flexible a la izquierda del botón
+    buttonLayout->addWidget(buttonEncriptar);
+
+
+    // Conectar la señal de edición de lineClave a una ranura personalizada
+    connect(lineClave, &QLineEdit::textChanged, this, &ADFGVXEncryptionTab::onLineClaveTextChanged);
+
+    // Agregar los widgets al diseño
+    layout->addWidget(labelClave);
+    layout->addWidget(lineClave);
+    layout->addWidget(labelFormateado);
+    layout->addWidget(lineFormateado);
+
+    layout->addWidget(labelTextPlain);
+    layout->addWidget(textEditTextPlain);
+
+    layout->addWidget(labelMensajeEncriptado);
+    layout->addWidget(textEditTextPlainEncriptado);
+
+    layout->addLayout(buttonLayout);
 }
 
 ADFGVXDecryptionTab::ADFGVXDecryptionTab(QWidget *parent)

@@ -25,18 +25,23 @@ private slots:
     void handleEncrypt() {
         std::cout << "hola de handle" <<std::endl;
     }
-    void onLineEditTextChanged(const QString &text) {
+    void onLineClaveTextChanged(const QString &text) {
         if (!text.isEmpty()) {
             // Si el lineEdit tiene contenido, muestra el QLabel formateado
+            lineFormateado->show();
             labelFormateado->show();
+
         } else {
             // Si el lineEdit está vacío, oculta el QLabel formateado
+            lineFormateado->hide();
             labelFormateado->hide();
         }
     }
 private:
     QLineEdit *lineClave;
     QLabel *labelFormateado;
+    QLineEdit *lineFormateado;
+
 };
 //! [0]
 
