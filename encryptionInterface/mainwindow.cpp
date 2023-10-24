@@ -157,6 +157,48 @@ ADFGVXEncryptionTab::ADFGVXEncryptionTab(QWidget *parent)
 ADFGVXDecryptionTab::ADFGVXDecryptionTab(QWidget *parent)
     :QWidget(parent)
 {
-    ;
+    adfgvx = ADFGVX(matrixContent);
+    //Crear Widgets
+    labelClave = new QLabel("CLAVE:",this);
+    lineEditClave = new QLineEdit(this);
+
+    labelMensajeEncriptado = new QLabel("MENSAJE ENCRIPTADO:",this);
+    textEditMensajeEncriptado = new QTextEdit(this);
+
+    labelTextoPlano = new QLabel("TEXTO PLANO:",this);
+    textEditTextoPlano = new QTextEdit(this);
+
+    //AGREGADO DE CARACTERISTICAS
+    buttonDesencriptar->setEnabled(false);
+    buttonDesencriptar->setStyleSheet("background-color: red; color: white;");
+    labelClave->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    labelMensajeEncriptado->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+    labelTextoPlano->setStyleSheet("color: rgba(0, 0, 0, 0.75); font-weight: bold; font-style: italic;");
+
+    // Alineación del texto de los labels
+    labelClave->setAlignment(Qt::AlignLeft);
+    labelMensajeEncriptado->setAlignment(Qt::AlignLeft);
+    labelTextoPlano->setAlignment(Qt::AlignLeft);
+
+    // Configurar un diseño vertical para organizar los widgets
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    // Configurar un diseño horizontal para el botón
+    QHBoxLayout *buttonLayout = new QHBoxLayout;
+    buttonLayout->addStretch(1); // Agregar un espacio flexible a la izquierda del botón
+    buttonLayout->addWidget(buttonDesencriptar);
+
+    //RANURAS
+    //connect(lineEditClave, &QLineEdit::textChanged, this,&ADFGVXDecryptionTab::onLineEditClaveChanged);
+
+    // Agregar los widgets al diseño
+    layout->addWidget(labelClave);
+    layout->addWidget(lineEditClave);
+
+    layout->addWidget(labelMensajeEncriptado);
+    layout->addWidget(textEditMensajeEncriptado);
+    layout->addLayout(buttonLayout);
+    layout->addWidget(labelTextoPlano);
+    layout->addWidget(textEditTextoPlano);
+
 }
 

@@ -106,6 +106,19 @@ class ADFGVXDecryptionTab: public QWidget{
     Q_OBJECT
 public:
     explicit ADFGVXDecryptionTab(QWidget *parent = nullptr);
+
+private:
+    ADFGVX adfgvx;
+    QLabel *labelClave;
+    QLineEdit *lineEditClave;
+
+    QLabel *labelMensajeEncriptado;
+    QTextEdit *textEditMensajeEncriptado;
+
+    QLabel *labelTextoPlano;
+    QTextEdit *textEditTextoPlano;
+
+    QPushButton *buttonDesencriptar = new QPushButton("DESENCRIPTAR");
 };
 //! [1]
 
