@@ -10,7 +10,6 @@ const string matrixContent = "fd60z2wg14snylhpce5moi3ut79xkvj8abrq";
 class ADFGVX{
 private:
     char M[6][6];
-    int lenMensajeOriginal;
 public:
     ADFGVX(string contenidoM=""){
         preprocesado(contenidoM);

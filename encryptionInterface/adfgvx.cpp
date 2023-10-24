@@ -2,7 +2,7 @@
 #include "utils.h"
 
 string ADFGVX::encrypt(string msg, string clave){
-    this->lenMensajeOriginal = msg.size();
+    //this->lenMensajeOriginal = msg.size();
     //FASE01: SUSTITUCION
     preprocesado(msg);
     cout << "QT: msg: " << msg<<endl;
@@ -14,23 +14,23 @@ string ADFGVX::encrypt(string msg, string clave){
 
     //FASE02: TRASPOSICION
     //<KEY, [CHAR,CHAR,CHAR,....]>
-    vector<pair<string, vector<char>>> claveColumna;
+    vector<pair<pair<char,int>, vector<char>>> claveColumna;
     for(int e = 0 ; e < (int)clave.size();e++){
         int salto = e;
         vector<char> temp;
         for(int i = 0 ; i < factor; i++){
             if(salto < msg_sustituido.size()) temp.pb(msg_sustituido[salto]); // claveColumna[clave[e]].pb(msg_sustituido[salto]);
-            else temp.pb('X'); //claveColumna[clave[e]].pb('X'); // X is default complete
+            else temp.pb('A'); //claveColumna[clave[e]].pb('X'); // X is default complete
             salto += clave.size();
         }
-        string key = string(1, clave[e]);
-        key += to_string(e);
-        claveColumna.pb({key,temp});
+        //string key = string(1, clave[e]);
+        //key += to_string(e);
+        claveColumna.pb({{clave[e],e},temp});
     }
     cout << "encrypt before" << endl;
     cout << "print clavecolumn: " << endl;
     for(auto it =claveColumna.begin() ;it != claveColumna.end() ; it++){
-        cout << it->first << "-> ";
+        cout << it->first.first << "-" <<it->first.second << "->";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
@@ -39,7 +39,7 @@ string ADFGVX::encrypt(string msg, string clave){
     cout << "encrypt after" << endl;
     cout << "print clavecolumn: " << endl;
     for(auto it =claveColumna.begin() ;it != claveColumna.end() ; it++){
-        cout << it->first << "-> ";
+        cout << it->first.first << "-" <<it->first.second << "->";
         for(auto et = it->second.begin() ; et != it->second.end(); et++){
             cout << *et << " ";
         }cout << endl;
@@ -131,14 +131,17 @@ string ADFGVX::decrypt(string msgEncriptado, string clave){
 
     //RECUPERAR EL MENSAJE ORIGINAL DE LA MATRIZ
     string mensaje_original;
-    for(int e = 0 ;e < 2*this->lenMensajeOriginal -1 ; e+=2){
+    //for(int e = 0 ;e < 2*this->lenMensajeOriginal -1 ; e+=2){
+    for(int e = 0 ;e < msgEncriptado.size() -1 ; e+=2){
         int a = id(mensaje_encriptadoFase01[e]);
         int b = id(mensaje_encriptadoFase01[e+1]);
-        mensaje_original += this->M[a][b];
+        if(a == -1 || b == -1){;}
+        else{mensaje_original += this->M[a][b];}
     }
     return mensaje_original;
 }
-
+//    DXXFDXGFDV
+//    ZVZDDXFZFZXGXD
 string ADFGVX::sustitucion(string msg){
     string ans;
     for(int e = 0 ; e < (int)msg.size(); e++){
@@ -263,8 +266,8 @@ int ADFGVX::id(char ch){
     if(ch == 'F') return 2;
     if(ch == 'G') return 3;
     if(ch == 'V') return 4;
-    //if(ch == 'X')
-    return 5;
+    if(ch == 'X') return 5;
+    return -1;
 }
 
 

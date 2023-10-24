@@ -134,6 +134,9 @@ private slots:
     }
     void onButtonDesencriptarPressed(){
         cout << "btn pressed" << endl;
+        string mensajeOriginalRecuperado = adfgvx.decrypt(mensajeEncriptado,claveFormateada);
+        cout << "mensajeOriginalRecuperado: "<< mensajeOriginalRecuperado << endl;
+        textEditTextoPlano->setText(QString::fromStdString(mensajeOriginalRecuperado));
     }
 private:
     ADFGVX adfgvx;
