@@ -106,7 +106,35 @@ class ADFGVXDecryptionTab: public QWidget{
     Q_OBJECT
 public:
     explicit ADFGVXDecryptionTab(QWidget *parent = nullptr);
-
+private slots:
+    void onLineEditClaveChanged(){
+        QString contenidoLineEditClave = lineEditClave->text();
+        claveFormateada = contenidoLineEditClave.toStdString();
+        adfgvx.preprocesado(claveFormateada);
+        cout << "changed lineEditClave: " << claveFormateada <<endl;
+        if(!claveFormateada.empty() && !mensajeEncriptado.empty()){
+            buttonDesencriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
+            buttonDesencriptar->setEnabled(true);
+        }else{
+            buttonDesencriptar->setEnabled(false);
+            buttonDesencriptar->setStyleSheet("background-color: red; color: white;");
+        }
+    }
+    void onTextEditMensajeEncriptadoChanged(){
+        QString contenidoTextEditMensajeEncriptado = textEditMensajeEncriptado->toPlainText();
+        mensajeEncriptado = contenidoTextEditMensajeEncriptado.toStdString();
+        cout << "mensaje encriptado: " << mensajeEncriptado << endl;
+        if(!claveFormateada.empty() && !mensajeEncriptado.empty()){
+            buttonDesencriptar->setStyleSheet("background-color: #4CAF50; color: white;"); // Estilo por defecto
+            buttonDesencriptar->setEnabled(true);
+        }else{
+            buttonDesencriptar->setEnabled(false);
+            buttonDesencriptar->setStyleSheet("background-color: red; color: white;");
+        }
+    }
+    void onButtonDesencriptarPressed(){
+        cout << "btn pressed" << endl;
+    }
 private:
     ADFGVX adfgvx;
     QLabel *labelClave;
@@ -119,6 +147,9 @@ private:
     QTextEdit *textEditTextoPlano;
 
     QPushButton *buttonDesencriptar = new QPushButton("DESENCRIPTAR");
+
+    string claveFormateada;
+    string mensajeEncriptado;
 };
 //! [1]
 

@@ -188,8 +188,9 @@ ADFGVXDecryptionTab::ADFGVXDecryptionTab(QWidget *parent)
     buttonLayout->addWidget(buttonDesencriptar);
 
     //RANURAS
-    //connect(lineEditClave, &QLineEdit::textChanged, this,&ADFGVXDecryptionTab::onLineEditClaveChanged);
-
+    connect(lineEditClave, &QLineEdit::textChanged, this,&ADFGVXDecryptionTab::onLineEditClaveChanged);
+    connect(textEditMensajeEncriptado, &QTextEdit::textChanged, this, &ADFGVXDecryptionTab::onTextEditMensajeEncriptadoChanged);
+    connect(buttonDesencriptar, &QPushButton::clicked,this,&ADFGVXDecryptionTab::onButtonDesencriptarPressed);
     // Agregar los widgets al diseño
     layout->addWidget(labelClave);
     layout->addWidget(lineEditClave);
