@@ -5,6 +5,7 @@ using namespace std;
 #define pb push_back
 
 const string matrixContent = "fd60z2wg14snylhpce5moi3ut79xkvj8abrq";
+//const string matrixContent = "0q9z7cmu1hf248wnrgl6vtpay3d5ekjsiobx";
 
 bool cmp(pair<pair<char,int>, vector<char>> &a, pair<pair<char,int>, vector<char>> &b){
 	int aPosition = a.first.second;
@@ -44,23 +45,23 @@ class ADFGVX{
 
 			//FASE02: TRASPOSICION
 			//<KEY, [CHAR,CHAR,CHAR,....]>
-			vector<pair<string, vector<char>>> claveColumna;
+			vector<pair<pair<char,int>, vector<char>>> claveColumna;
 			for(int e = 0 ; e < (int)clave.size();e++){
 				int salto = e;
 				vector<char> temp;
 				for(int i = 0 ; i < factor; i++){
 					if(salto < msg_sustituido.size()) temp.pb(msg_sustituido[salto]); // claveColumna[clave[e]].pb(msg_sustituido[salto]);
-					else temp.pb('X'); //claveColumna[clave[e]].pb('X'); // X is default complete
+					else temp.pb('A'); //claveColumna[clave[e]].pb('X'); // X is default complete
 					salto += clave.size();
 				}
-				string key = string(1, clave[e]);
-				key += to_string(e);
-				claveColumna.pb({key,temp});
+				//string key = string(1, clave[e]);
+				//key += to_string(e);
+				claveColumna.pb({{clave[e],e},temp});
 			}
 			cout << "encrypt before" << endl;
 			cout << "print clavecolumn: " << endl;
 			for(auto it =claveColumna.begin() ;it != claveColumna.end() ; it++){
-				cout << it->first << "-> ";
+				cout << it->first.first << "-" <<it->first.second << "->";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
@@ -69,7 +70,7 @@ class ADFGVX{
 			cout << "encrypt after" << endl;
 			cout << "print clavecolumn: " << endl;
 			for(auto it =claveColumna.begin() ;it != claveColumna.end() ; it++){
-				cout << it->first << "-> ";
+				cout << it->first.first << "-" <<it->first.second << "->";
 				for(auto et = it->second.begin() ; et != it->second.end(); et++){
 					cout << *et << " ";
 				}cout << endl;
@@ -162,7 +163,8 @@ class ADFGVX{
 			for(int e = 0 ;e < 2*this->lenMensajeOriginal -1 ; e+=2){
 				int a = id(mensaje_encriptadoFase01[e]);
 				int b = id(mensaje_encriptadoFase01[e+1]);
-				mensaje_original += this->M[a][b];
+				if(a == -1 || b == -1){;}
+				else {mensaje_original += this->M[a][b];}
 			}
 			return mensaje_original;
 		}
@@ -291,15 +293,17 @@ class ADFGVX{
 			if(ch == 'F') return 2;
 			if(ch == 'G') return 3;
 			if(ch == 'V') return 4;
-			//if(ch == 'X') 
-			return 5;
+			if(ch == 'X') return 5;
+			return -1;
 		}
 };
 
 
 void solve(){
 	ADFGVX adfgvx = ADFGVX(matrixContent);
-	string mensaje = "NOYELLOWTEAMARBOLESmonosELIAS", clave = "sasasasasa";
+	//string mensaje = "envien municiones", clave = "whisky";
+	//string mensaje = "NOYELLOWTEAMARBOLESmonosELIAS", clave = "sasasasasa";
+	string mensaje = "nanos", clave = "losperrosdeaqp";
 	string msg_encriptado = adfgvx.encrypt(mensaje,clave);
 	// adfgvx.printMatriz();
 	cout << "mensaje encriptado: " << msg_encriptado << endl;
