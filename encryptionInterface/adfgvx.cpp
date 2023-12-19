@@ -20,7 +20,7 @@ string ADFGVX::encrypt(string msg, string clave){
         vector<char> temp;
         for(int i = 0 ; i < factor; i++){
             if(salto < msg_sustituido.size()) temp.pb(msg_sustituido[salto]); // claveColumna[clave[e]].pb(msg_sustituido[salto]);
-            else temp.pb('A'); //claveColumna[clave[e]].pb('X'); // X is default complete
+            else temp.pb('X'); //claveColumna[clave[e]].pb('X'); // X is default complete
             salto += clave.size();
         }
         //string key = string(1, clave[e]);
@@ -235,7 +235,7 @@ string ADFGVX::deleteSpacesAndPunctuation(string line){
                      line[e] == '-' || line[e] == '_' || line[e] == ';' ||
                      line[e] == '`' || line[e] == '^' || line[e] == '~' ||
                      line[e] == '\''|| line[e] == '\\'|| line[e] == '\¿'||
-                     line[e] == '\"'){;}
+                     line[e] == '\"' || line[e] == '@'){;}
             else{
                 ans += line[e];
             }
